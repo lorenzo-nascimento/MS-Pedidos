@@ -5,6 +5,7 @@ import br.lorenzo.ms_pedidos.dto.PedidoResponseDTO;
 import br.lorenzo.ms_pedidos.model.Cliente;
 import br.lorenzo.ms_pedidos.model.Pedido;
 import br.lorenzo.ms_pedidos.model.enums.StatusPedido;
+import br.lorenzo.ms_pedidos.repository.ClienteRepository;
 import br.lorenzo.ms_pedidos.repository.PedidoRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PedidoService {
 
+    private final ClienteRepository clienteRepository;
     private final PedidoRepository pedidoRepository;
     private final ClienteService clienteService;
     private final ModelMapper modelMapper;
@@ -25,15 +27,13 @@ public class PedidoService {
     // CREATE
     @Transactional
     public PedidoResponseDTO criarPedido(PedidoDTO pedidoDTO) {
-        Cliente cliente = modelMapper.map(
-                clienteService.buscarPorId(pedidoDTO.getClienteId()),
-                Cliente.class
-        );
+        Cliente cliente = clienteRepository.findById(pedidoDTO.getClienteId())
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
 
-        Pedido pedido = modelMapper.map(pedidoDTO, Pedido.class);
-        pedido.setCliente(cliente);
+        Pedido pedido = new Pedido();
         pedido.setStatus(pedidoDTO.getStatus() != null ?
                 pedidoDTO.getStatus() : StatusPedido.PENDENTE);
+        pedido.setCliente(cliente);
 
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
         return toResponseDTO(pedidoSalvo);

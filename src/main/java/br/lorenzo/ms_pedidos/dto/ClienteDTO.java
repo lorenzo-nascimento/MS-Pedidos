@@ -13,6 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ClienteDTO {
 
+    private Long id;
+
     @NotBlank(message = "nome é obrigatório")
     @Size(min = 3, max = 100, message = "Nome deve ter entre 3 a 100 caracteres")
     private String nome;
