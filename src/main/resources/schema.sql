@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS clientes_tb (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS pedidos_tb (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    status VARCHAR(20) NOT NULL,
+    data_criacao TIMESTAMP NOT NULL,
+    cliente_id BIGINT NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES clientes_tb(id)
+);
