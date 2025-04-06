@@ -71,9 +71,19 @@ public class PedidoService {
     }
 
     private PedidoResponseDTO toResponseDTO(Pedido pedido) {
-        PedidoResponseDTO dto = modelMapper.map(pedido, PedidoResponseDTO.class);
-        dto.setClienteNome(pedido.getCliente().getNome());
+        PedidoResponseDTO dto = new PedidoResponseDTO();
+        dto.setId(pedido.getId());
+        dto.setStatus(pedido.getStatus());
+        dto.setDataCriacao(pedido.getDataCriacao());
+
+        // Mapeamento manual garantido
+        if(pedido.getCliente() != null) {
+            dto.setClienteId(pedido.getCliente().getId());
+            dto.setClienteNome(pedido.getCliente().getNome());
+        }
+
         return dto;
     }
+
 
 } // Fim da Classe

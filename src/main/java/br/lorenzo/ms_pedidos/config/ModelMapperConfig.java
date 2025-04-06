@@ -1,7 +1,7 @@
 package br.lorenzo.ms_pedidos.config;
 
-import br.lorenzo.ms_pedidos.dto.ClienteDTO;
-import br.lorenzo.ms_pedidos.model.Cliente;
+import br.lorenzo.ms_pedidos.dto.PedidoResponseDTO;
+import br.lorenzo.ms_pedidos.model.Pedido;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +16,9 @@ public class ModelMapperConfig {
 
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setSkipNullEnabled(true);
-        modelMapper.createTypeMap(Cliente.class, ClienteDTO.class)
-                .addMapping(Cliente::getId, ClienteDTO::setId);
+                .setSkipNullEnabled(true)
+                .setAmbiguityIgnored(true); // Ignora conflitos de mapeamento
+
         return modelMapper;
     }
 }

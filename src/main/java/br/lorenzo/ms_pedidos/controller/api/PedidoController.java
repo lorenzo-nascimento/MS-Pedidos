@@ -7,6 +7,7 @@ import br.lorenzo.ms_pedidos.service.PedidoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +20,10 @@ public class PedidoController {
 
     private final PedidoService pedidoService;
 
-    @PostMapping
-    public ResponseEntity<PedidoResponseDTO> criarPedido(@Valid @RequestBody PedidoDTO pedidoDTO) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PedidoResponseDTO> criarPedido(
+            @Valid @RequestBody PedidoDTO pedidoDTO) {
         PedidoResponseDTO novoPedido = pedidoService.criarPedido(pedidoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
     }

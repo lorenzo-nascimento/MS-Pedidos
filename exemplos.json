@@ -1,0 +1,78 @@
+{
+  "clientes": {
+    "criar_cliente": {
+      "method": "POST",
+      "endpoint": "/api/clientes",
+      "description": "Cria um novo cliente",
+      "request": {
+        "nome": "João Silva",
+        "email": "joao@email.com"
+      },
+      "response": {
+        "id": 1,
+        "nome": "João Silva",
+        "email": "joao@email.com"
+      }
+    },
+    "atualizar_cliente": {
+      "method": "PUT",
+      "endpoint": "/api/clientes/1",
+      "description": "Atualiza um cliente existente",
+      "request": {
+        "nome": "João Silva Atualizado",
+        "email": "joao.novo@email.com"
+      },
+      "response": {
+        "id": 1,
+        "nome": "João Silva Atualizado",
+        "email": "joao.novo@email.com"
+      }
+    }
+  },
+  "pedidos": {
+    "criar_pedido": {
+      "method": "POST",
+      "endpoint": "/api/pedidos",
+      "description": "Cria um novo pedido",
+      "request": {
+        "clienteId": 1,
+        "status": "PENDENTE"
+      },
+      "response": {
+        "id": 1,
+        "status": "PENDENTE",
+        "dataCriacao": "2025-04-06T15:30:00",
+        "clienteId": 1,
+        "clienteNome": "João Silva"
+      }
+    },
+    "atualizar_status": {
+      "method": "PATCH",
+      "endpoint": "/api/pedidos/1/status?novoStatus=FINALIZADO",
+      "description": "Atualiza o status de um pedido via URL parameter",
+      "request": null,
+      "response": {
+        "id": 1,
+        "status": "FINALIZADO",
+        "dataCriacao": "2025-04-06T15:30:00",
+        "clienteId": 1,
+        "clienteNome": "João Silva"
+      }
+    },
+    "atualizar_status_json": {
+      "method": "PATCH",
+      "endpoint": "/api/pedidos/1/status",
+      "description": "Atualiza o status de um pedido via JSON",
+      "request": {
+        "novoStatus": "CANCELADO"
+      },
+      "response": {
+        "id": 1,
+        "status": "CANCELADO",
+        "dataCriacao": "2025-04-06T15:30:00",
+        "clienteId": 1,
+        "clienteNome": "João Silva"
+      }
+    }
+  }
+}
