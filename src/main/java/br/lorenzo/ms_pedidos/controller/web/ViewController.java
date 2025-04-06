@@ -15,7 +15,7 @@ public class ViewController {
     private final ClienteService clienteService;
     private final PedidoService pedidoService;
 
-    public FrontendController(ClienteService clienteService, PedidoService pedidoService) {
+    public ViewController(ClienteService clienteService, PedidoService pedidoService) {
         this.clienteService = clienteService;
         this.pedidoService = pedidoService;
     }
