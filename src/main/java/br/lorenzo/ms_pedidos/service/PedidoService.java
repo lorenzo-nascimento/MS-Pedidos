@@ -85,5 +85,11 @@ public class PedidoService {
         return dto;
     }
 
+    public List<PedidoResponseDTO> listarTodosPedidos() {
+        return pedidoRepository.findAll().stream()
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
 
 } // Fim da Classe

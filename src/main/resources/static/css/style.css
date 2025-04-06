@@ -1,0 +1,12 @@
+body {
+    padding-top: 2rem;
+}
+
+.table-actions {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.btn-lg {
+    font-size: 1.2rem;
+}
