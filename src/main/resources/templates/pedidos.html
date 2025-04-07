@@ -7,6 +7,13 @@
 </head>
 <body>
 <div class="container mt-4">
+
+
+    <div th:if="${mensagem}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${mensagem}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Lista de Pedidos</h1>
         <div>
@@ -31,19 +38,21 @@
             <td>
                         <span th:text="${pedido.status}"
                               th:class="${pedido.status == 'PENDENTE'} ? 'badge bg-warning' :
-                                        ${pedido.status == 'FINALIZADO'} ? 'badge bg-success' : 'badge bg-danger'">
+                                        (${pedido.status == 'FINALIZADO'} ? 'badge bg-success' : 'badge bg-danger')">
                         </span>
             </td>
             <td th:text="${#temporals.format(pedido.dataCriacao, 'dd/MM/yyyy HH:mm')}"></td>
             <td th:text="${pedido.clienteNome} + ' (ID: ' + ${pedido.clienteId} + ')'"></td>
             <td>
                 <div class="btn-group">
-                    <a th:href="@{/pedidos/{id}/status(id=${pedido.id}, status='FINALIZADO')}"
-                       class="btn btn-sm btn-success" th:if="${pedido.status != 'FINALIZADO'}">
+                    <a th:href="@{/pedidos/{id}/status(id=${pedido.id}, novoStatus='FINALIZADO')}"
+                       class="btn btn-sm btn-success"
+                       th:if="${pedido.status != 'FINALIZADO'}">
                         Finalizar
                     </a>
-                    <a th:href="@{/pedidos/{id}/status(id=${pedido.id}, status='CANCELADO')}"
-                       class="btn btn-sm btn-danger" th:if="${pedido.status != 'CANCELADO'}">
+                    <a th:href="@{/pedidos/{id}/status(id=${pedido.id}, novoStatus='CANCELADO')}"
+                       class="btn btn-sm btn-danger"
+                       th:if="${pedido.status != 'CANCELADO'}">
                         Cancelar
                     </a>
                 </div>

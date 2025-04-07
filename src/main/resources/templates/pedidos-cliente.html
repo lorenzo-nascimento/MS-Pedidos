@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedidos do Cliente</title>
+  <link th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Pedidos do Cliente: <span th:text="${cliente.nome}"></span></h1>
+    <a th:href="@{/clientes}" class="btn btn-outline-secondary">Voltar para Clientes</a>
+  </div>
+
+  <div th:if="${pedidos.empty}" class="alert alert-info">
+    Nenhum pedido encontrado para este cliente.
+  </div>
+
+  <table th:unless="${pedidos.empty}" class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Data</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pedido : ${pedidos}">
+      <td th:text="${pedido.id}"></td>
+      <td>
+                        <span th:text="${pedido.status}"
+                              th:class="${pedido.status == 'PENDENTE'} ? 'badge bg-warning' :
+                                        (${pedido.status == 'FINALIZADO'} ? 'badge bg-success' : 'badge bg-danger')">
+                        </span>
+      </td>
+      <td th:text="${#temporals.format(pedido.dataCriacao, 'dd/MM/yyyy HH:mm')}"></td>
+      <td>
+        <div class="btn-group">
+          <a th:href="@{/pedidos/{id}/status(id=${pedido.id}, novoStatus='FINALIZADO')}"
+             class="btn btn-sm btn-success"
+             th:if="${pedido.status != 'FINALIZADO'}">
+            Finalizar
+          </a>
+          <a th:href="@{/pedidos/{id}/status(id=${pedido.id}, novoStatus='CANCELADO')}"
+             class="btn btn-sm btn-danger"
+             th:if="${pedido.status != 'CANCELADO'}">
+            Cancelar
+          </a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
